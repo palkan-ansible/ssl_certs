@@ -1,0 +1,20 @@
+---
+- name: SSL | Ensure ssl certs dirs exists
+  file: dest={{ item.dir }} state=directory
+  sudo: yes
+  with_items: ssl_certs
+
+- name: SSL | Ensure ssl keys dirs exists
+  file: dest={{ item.dir }} state=directory
+  sudo: yes
+  with_items: ssl_keys
+
+- name: SSL | Copy SSL certs
+  copy: src={{ item.src }} dest="{{ item.dir }}/{{ item.name }}.crt"
+  sudo: yes
+  with_items: ssl_certs
+
+- name: SSL | Copy SSL keys
+  copy: src={{ item.src }} dest="{{ item.dir }}/{{ item.name }}.key"
+  sudo: yes
+  with_items: ssl_keys
